@@ -4,7 +4,7 @@ import anthropic
 import json
 import os
 
-app = Flask(_name_, static_folder='static')
+app = Flask(__name__, static_folder='static')
 CORS(app)
 
 client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
