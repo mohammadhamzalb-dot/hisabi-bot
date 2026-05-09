@@ -31,7 +31,7 @@ def chat():
         )
 
         message = client.messages.create(
-            model="claude-sonnet-4-5"
+            model="claude-sonnet-4-5",
             max_tokens=800,
             system=system_prompt,
             messages=[{"role": "user", "content": user_message}]
