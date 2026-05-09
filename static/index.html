@@ -1,38 +1,283 @@
-
-<!doctype html>
-<html dir="ltr" lang="en" class="loading">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="color-scheme" content="light dark">
-  <base href="chrome://downloads">
-  <title>Download history</title>
-  <link rel="stylesheet" href="chrome://resources/css/md_colors.css">
-  <style>
-    html {
-      /* Remove 300ms delay for 'click' event, when using touch interface. */
-      touch-action: manipulation;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      html {
-        background: var(--md-background-color);
-      }
-    }
-
-    html:not(.loading),
-    body {
-      height: 100%;
-    }
-
-    body {
-      display: flex;
-      margin: 0;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حسابي — مساعدك المالي الذكي</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+:root{--bg:#0d1117;--sur:#161b22;--card:#21262d;--bor:#30363d;--gr:#00b894;--gl:#00cec9;--red:#ff7675;--yel:#fdcb6e;--tx:#e6edf3;--dim:#7d8590;--bu:#0a3622;--bb:#161b22;--pur:#8b5cf6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--tx);height:100dvh;display:flex;justify-content:center;overflow:hidden}
+.app{width:100%;max-width:500px;height:100dvh;display:flex;flex-direction:column;position:relative}
+.hdr{background:var(--sur);padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--bor);flex-shrink:0}
+.av{width:42px;height:42px;background:linear-gradient(135deg,var(--gr),var(--gl));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 0 20px rgba(0,184,148,.3)}
+.hi h2{font-size:15px;font-weight:700}
+.hi p{font-size:11px;color:var(--gl)}
+.dbtn{margin-right:auto;background:var(--card);border:1px solid var(--bor);border-radius:10px;padding:6px 12px;color:var(--tx);cursor:pointer;font-family:'Cairo',sans-serif;font-size:12px;transition:.2s}
+.dbtn:hover{border-color:var(--gr);color:var(--gl)}
+.dash{background:var(--sur);padding:10px 12px;display:flex;gap:8px;border-bottom:1px solid var(--bor);flex-shrink:0;overflow-x:auto}
+.dash::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;background:var(--bg);border:1px solid var(--bor);border-radius:20px;padding:6px 14px;text-align:center;cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--gr)}
+.chip .v{font-size:16px;font-weight:900}
+.chip .l{font-size:10px;color:var(--dim)}
+.g .v{color:var(--gl)}.r .v{color:var(--red)}.y .v{color:var(--yel)}
+.chat{flex:1;overflow-y:auto;padding:12px 10px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+.chat::-webkit-scrollbar{width:4px}
+.chat::-webkit-scrollbar-thumb{background:var(--bor);border-radius:2px}
+.mw{display:flex;flex-direction:column;animation:pp .2s ease}
+@keyframes pp{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
+.mw.u{align-items:flex-start}.mw.b{align-items:flex-end}
+.bub{max-width:84%;padding:9px 13px;border-radius:12px;font-size:14px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
+.mw.u .bub{background:var(--bu);border-radius:12px 12px 12px 2px;border:1px solid rgba(0,184,148,.2)}
+.mw.b .bub{background:var(--bb);border:1px solid var(--bor);border-radius:12px 12px 2px 12px}
+.ts{font-size:10px;color:var(--dim);margin-top:3px;padding:0 4px}
+.rc{background:var(--card);border-radius:8px;padding:8px 10px;margin-top:6px;border-right:3px solid var(--gl)}
+.rc.neg{border-color:var(--red)}
+.rc h4{font-size:13px;font-weight:700;margin-bottom:2px}
+.rc .am{font-size:18px;font-weight:900}
+.rc .am.p{color:var(--gl)}.rc .am.n{color:var(--red)}
+.rc .dt{font-size:11px;color:var(--dim);margin-top:3px}
+.receipt-card{background:var(--card);border:1px solid var(--bor);border-radius:10px;padding:12px;margin-top:8px;position:relative;overflow:hidden}
+.receipt-card::before{content:'';position:absolute;top:0;right:0;left:0;height:3px;background:linear-gradient(90deg,var(--gr),var(--gl))}
+.receipt-card .rt{font-size:12px;color:var(--dim);margin-bottom:8px;font-weight:600;letter-spacing:1px}
+.receipt-card .rp{font-size:15px;font-weight:700;margin-bottom:4px}
+.receipt-card .ra{font-size:22px;font-weight:900;color:var(--gl)}
+.receipt-card .rd{font-size:11px;color:var(--dim);margin-top:6px}
+.receipt-card .rn{font-size:12px;color:var(--yel);margin-top:4px}
+.copy-btn{background:var(--bg);border:1px solid var(--bor);border-radius:6px;padding:4px 10px;font-family:'Cairo',sans-serif;font-size:11px;color:var(--dim);cursor:pointer;margin-top:8px;transition:.2s}
+.copy-btn:hover{border-color:var(--gr);color:var(--gl)}
+.typing .bub{display:flex;gap:4px;align-items:center;padding:12px 16px}
+.dot{width:7px;height:7px;background:var(--dim);border-radius:50%;animation:bn 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes bn{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.qc{padding:8px 10px;display:flex;gap:6px;overflow-x:auto;flex-shrink:0;background:var(--bg);border-top:1px solid var(--bor)}
+.qc::-webkit-scrollbar{display:none}
+.qb{flex-shrink:0;background:var(--sur);border:1px solid var(--bor);border-radius:16px;padding:5px 12px;font-family:'Cairo',sans-serif;font-size:12px;color:var(--tx);cursor:pointer;transition:.2s;white-space:nowrap}
+.qb:hover{background:var(--card);border-color:var(--gr);color:var(--gl)}
+.irow{background:var(--sur);padding:8px 10px;display:flex;gap:8px;align-items:flex-end;border-top:1px solid var(--bor);flex-shrink:0}
+textarea{flex:1;background:var(--card);border:1px solid var(--bor);border-radius:20px;padding:9px 14px;font-family:'Cairo',sans-serif;font-size:14px;color:var(--tx);resize:none;outline:none;max-height:100px;line-height:1.5;transition:.2s}
+textarea::placeholder{color:var(--dim)}
+textarea:focus{border-color:var(--gr)}
+.sb{width:42px;height:42px;background:var(--gr);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:.2s;box-shadow:0 0 15px rgba(0,184,148,.3)}
+.sb:hover{background:var(--gl)}.sb:active{transform:scale(.93)}
+.sb svg{width:20px;height:20px;fill:white}
+.ov{display:none;position:absolute;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);z-index:20;align-items:flex-end}
+.ov.show{display:flex}
+.lp{width:100%;background:var(--sur);border-radius:20px 20px 0 0;padding:20px 16px 32px;max-height:80vh;overflow-y:auto;animation:su .25s ease}
+@keyframes su{from{transform:translateY(100%)}to{transform:none}}
+.lp h3{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.xb{background:var(--card);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;color:var(--dim);font-size:16px;display:flex;align-items:center;justify-content:center}
+.li{background:var(--card);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;border-right:3px solid var(--bor)}
+.li.om{border-color:var(--gl)}.li.oh{border-color:var(--red)}
+.li .pn{font-size:14px;font-weight:700}.li .dc{font-size:11px;color:var(--dim);margin-top:2px}
+.li .la{font-size:17px;font-weight:900}
+.li.om .la{color:var(--gl)}.li.oh .la{color:var(--red)}
+.empty{text-align:center;color:var(--dim);padding:40px 0;font-size:14px}
+.net-bar{background:var(--card);border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;justify-content:space-between}
+.net-bar span{font-size:12px;color:var(--dim)}
+.net-bar strong{font-size:15px;font-weight:900}
+</style>
 </head>
 <body>
-  <downloads-manager></downloads-manager>
-  <link rel="stylesheet" href="chrome://resources/css/text_defaults_md.css">
-  <script type="module" src="downloads.js"></script>
+<div class="app">
+  <div class="hdr">
+    <div class="av">🤖</div>
+    <div class="hi">
+      <h2>حسابي بوت</h2>
+      <p>● مساعدك المالي الذكي</p>
+    </div>
+    <button class="dbtn" onclick="showL()">📋 الدفتر</button>
+  </div>
+  <div class="dash">
+    <div class="chip g" onclick="showL('om')"><div class="v" id="dom">0$</div><div class="l">بدهم إلي</div></div>
+    <div class="chip r" onclick="showL('oh')"><div class="v" id="doh">0$</div><div class="l">علي لهم</div></div>
+    <div class="chip y"><div class="v" id="dpp">0</div><div class="l">أشخاص</div></div>
+    <div class="chip" onclick="showL()"><div class="v" id="drc" style="color:var(--tx)">0</div><div class="l">سجل</div></div>
+  </div>
+  <div class="chat" id="chat"></div>
+  <div class="qc">
+    <button class="qb" onclick="qs('بدهم إلي؟')">💚 بدهم إلي</button>
+    <button class="qb" onclick="qs('شو علي؟')">❤️ علي لهم</button>
+    <button class="qb" onclick="qs('ملخص الوضع')">📊 ملخص</button>
+    <button class="qb" onclick="qs('كل الديون')">📋 الكل</button>
+    <button class="qb" onclick="qs('امسح كل شي')">🗑️ مسح</button>
+  </div>
+  <div class="irow">
+    <textarea id="inp" rows="1" placeholder='مثال: "محمد بدنا منو 50" أو "سمير بدو منا 90"'></textarea>
+    <button class="sb" onclick="send()"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>
+  </div>
+  <div class="ov" id="ov" onclick="hideL(event)">
+    <div class="lp" onclick="event.stopPropagation()">
+      <h3><span id="lt">📋 الدفتر الكامل</span><button class="xb" onclick="hideL()">✕</button></h3>
+      <div id="ll"></div>
+    </div>
+  </div>
+</div>
+<script>
+let recs=JSON.parse(localStorage.getItem('hisabi')||'[]');
+function save(){localStorage.setItem('hisabi',JSON.stringify(recs));dash()}
+function dash(){
+  const om=recs.filter(r=>r.t==='om').reduce((s,r)=>s+r.a,0);
+  const oh=recs.filter(r=>r.t==='oh').reduce((s,r)=>s+r.a,0);
+  const pp=new Set(recs.map(r=>r.p)).size;
+  document.getElementById('dom').textContent=om.toFixed(0)+'$';
+  document.getElementById('doh').textContent=oh.toFixed(0)+'$';
+  document.getElementById('dpp').textContent=pp;
+  document.getElementById('drc').textContent=recs.length;
+}
+function nowT(){return new Date().toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit'})}
+function nowD(){return new Date().toLocaleDateString('ar-SY')}
+function addMsg(role,content,isHTML){
+  const chat=document.getElementById('chat');
+  const w=document.createElement('div');w.className='mw '+role;
+  const b=document.createElement('div');b.className='bub';
+  if(isHTML)b.innerHTML=content;else b.textContent=content;
+  const t=document.createElement('div');t.className='ts';
+  t.textContent=nowT()+(role==='u'?' ✓✓':'');
+  w.appendChild(b);w.appendChild(t);
+  chat.appendChild(w);chat.scrollTop=chat.scrollHeight;
+}
+function showTyping(){
+  const chat=document.getElementById('chat');
+  const w=document.createElement('div');w.className='mw b typing';w.id='typ';
+  w.innerHTML='<div class="bub"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  chat.appendChild(w);chat.scrollTop=chat.scrollHeight;
+}
+function hideTyping(){const e=document.getElementById('typ');if(e)e.remove()}
+
+function makeReceipt(person, amount, note, date){
+  const id='r_'+Date.now();
+  const txt=`وصل دفع\nالاسم: ${person}\nالمبلغ: ${amount}$\nالتاريخ: ${date}${note?'\nملاحظة: '+note:''}`;
+  return `<div class="receipt-card">
+    <div class="rt">🧾 وصل دفع رسمي</div>
+    <div class="rp">👤 ${person}</div>
+    <div class="ra">${amount}$</div>
+    <div class="rd">📅 ${date}</div>
+    ${note?`<div class="rn">📝 ${note}</div>`:''}
+    <br>
+    <button class="copy-btn" onclick="copyReceipt('${id}')">📋 نسخ الوصل</button>
+    <div id="${id}" style="display:none">${txt}</div>
+  </div>`;
+}
+function copyReceipt(id){
+  const txt=document.getElementById(id).textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn=document.querySelector(`button[onclick="copyReceipt('${id}')"]`);
+    if(btn){btn.textContent='✅ تم النسخ!';setTimeout(()=>btn.textContent='📋 نسخ الوصل',2000)}
+  });
+}
+
+async function send(){
+  const inp=document.getElementById('inp');
+  const txt=inp.value.trim();if(!txt)return;
+  inp.value='';inp.style.height='auto';
+  addMsg('u',txt,false);showTyping();
+  try{
+    const r=await askAI(txt);
+    hideTyping();handle(r);
+  }catch(e){
+    hideTyping();
+    addMsg('b','⚠️ في مشكلة بالاتصال، جرب مرة ثانية.',false);
+    console.error(e);
+  }
+}
+function qs(t){document.getElementById('inp').value=t;send()}
+
+async function askAI(msg){
+  const res=await fetch('/chat',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message:msg,records:recs})
+  });
+  return await res.json();
+}
+
+function handle(r){
+  const{action,p,a,n,msg}=r;
+  let showRecs=[];
+  switch(action){
+    case 'ADD_OM':
+      if(p&&a){recs.push({id:Date.now(),p,a,t:'om',n:n||'',d:nowD()});save()}
+      showRecs=recs.filter(x=>x.p===p&&x.t==='om').slice(-1);break;
+    case 'ADD_OH':
+      if(p&&a){recs.push({id:Date.now(),p,a,t:'oh',n:n||'',d:nowD()});save()}
+      showRecs=recs.filter(x=>x.p===p&&x.t==='oh').slice(-1);break;
+    case 'PAID_ME':
+      if(p){
+        let rem=a||999999;
+        recs=recs.map(x=>{
+          if(x.p===p&&x.t==='om'&&rem>0){
+            if(x.a<=rem){rem-=x.a;x.a=0}else{x.a-=rem;rem=0}
+          }return x;
+        }).filter(x=>x.a>0);save();
+      }break;
+    case 'PAID_HIM':
+      if(p){
+        let rem=a||999999;
+        recs=recs.map(x=>{
+          if(x.p===p&&x.t==='oh'&&rem>0){
+            if(x.a<=rem){rem-=x.a;x.a=0}else{x.a-=rem;rem=0}
+          }return x;
+        }).filter(x=>x.a>0);save();
+      }break;
+    case 'QUERY_OM':showRecs=recs.filter(x=>x.t==='om');break;
+    case 'QUERY_OH':showRecs=recs.filter(x=>x.t==='oh');break;
+    case 'QUERY_PERSON':showRecs=recs.filter(x=>x.p===p);break;
+    case 'QUERY_ALL':showRecs=recs;break;
+    case 'DELETE_ALL':recs=[];save();break;
+  }
+  let html=`<span>${msg}</span>`;
+  if(action==='RECEIPT'&&p){
+    const paid=recs.filter(x=>x.p===p);
+    const lastAmt=a||(paid.length>0?paid[paid.length-1].a:0);
+    html+=makeReceipt(p,lastAmt,n,nowD());
+  } else {
+    showRecs.forEach(x=>{
+      const pos=x.t==='om';
+      html+=`<div class="rc ${pos?'':'neg'}">
+        <h4>${x.p}${x.n?' · '+x.n:''}</h4>
+        <div class="am ${pos?'p':'n'}">${pos?'+':'-'}${x.a}$</div>
+        <div class="dt">${x.d}</div>
+      </div>`;
+    });
+  }
+  addMsg('b',html,true);
+}
+
+function showL(f){
+  const ll=document.getElementById('ll');
+  const lt=document.getElementById('lt');
+  let list=recs;
+  if(f==='om'){list=recs.filter(r=>r.t==='om');lt.textContent='💚 بدهم إلي';}
+  else if(f==='oh'){list=recs.filter(r=>r.t==='oh');lt.textContent='❤️ علي لهم';}
+  else{lt.textContent='📋 الدفتر الكامل';}
+  const om=recs.filter(r=>r.t==='om').reduce((s,r)=>s+r.a,0);
+  const oh=recs.filter(r=>r.t==='oh').reduce((s,r)=>s+r.a,0);
+  const net=om-oh;
+  let html=`<div class="net-bar">
+    <div><span>صافي الوضع</span><br><strong style="color:${net>=0?'var(--gl)':'var(--red)'}">${net>=0?'+':''}${net.toFixed(0)}$</strong></div>
+    <div style="text-align:left"><span>إجمالي السجلات</span><br><strong>${recs.length}</strong></div>
+  </div>`;
+  if(!list.length){html+='<div class="empty">لا يوجد سجلات بعد 📝</div>';}
+  else{
+    html+=list.map(r=>`
+      <div class="li ${r.t}">
+        <div><div class="pn">${r.p}</div><div class="dc">${r.n||(r.t==='om'?'دين عليه':'دين عليك')} · ${r.d}</div></div>
+        <div class="la">${r.t==='om'?'+':'-'}${r.a}$</div>
+      </div>`).join('');
+  }
+  ll.innerHTML=html;
+  document.getElementById('ov').classList.add('show');
+}
+function hideL(e){if(!e||e.target===document.getElementById('ov'))document.getElementById('ov').classList.remove('show')}
+document.getElementById('inp').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'});
+document.getElementById('inp').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}});
+dash();
+setTimeout(()=>{
+  addMsg('b',`أهلاً! أنا حسابي بوت 🤖\n\nبقدر أسجلك:\n💚 "محمد بدنا منو 50$" — دين عليه\n❤️ "سمير بدو منا 90$" — دين عليك\n✅ "محمد دفع 20$" — سداد\n🧾 "عطيني وصل لمحمد" — وصل دفع\n\nاكتب بلهجتك وأنا بفهم 😊`,false);
+},300);
+</script>
 </body>
 </html>
