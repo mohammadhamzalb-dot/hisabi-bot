@@ -20,27 +20,19 @@ def chat():
         records = data.get('records', [])
         records_str = json.dumps(records, ensure_ascii=False)
 
-        system_prompt = (
-            "You are an Arabic accounting bot. Reply ONLY with valid JSON, nothing else. "
-            "No explanation, no markdown, just JSON. "
-            "Current records: " + records_str + ". "
-            "Actions: ADD_OM=they owe me, ADD_OH=I owe them, PAID_ME, PAID_HIM, QUERY_OM, QUERY_OH, QUERY_PERSON, QUERY_ALL, DELETE_ALL, RECEIPT, UNKNOWN. "
-            "Reply format: {\"action\":\"...\",\"p\":\"name or null\",\"a\":number or null,\"n\":\"note\",\"msg\":\"Arabic reply\"}"
-        )
+        system_prompt = "You are an Arabic accounting bot. Reply ONLY with valid JSON. No markdown. No explanation. Current records: " + records_str + ". Actions: ADD_OM=they owe me, ADD_OH=I owe them, PAID_ME, PAID_HIM, QUERY_OM, QUERY_OH, QUERY_PERSON, QUERY_ALL, DELETE_ALL, RECEIPT, UNKNOWN. Format: {\"action\":\"...\",\"p\":\"name\",\"a\":50,\"n\":\"note\",\"msg\":\"Arabic reply\"}"
 
         message = client.messages.create(
             model="claude-haiku-4-5",
             max_tokens=500,
             system=system_prompt,
-            messages=[{"role": "user", "content": user_message}]
+            messages=[
+                {"role": "user", "content": user_message},
+                {"role": "assistant", "content": "{"}
+            ]
         )
 
-        text = message.content[0].text.strip()
-        if text.startswith(""):
-            text = text.split("")[1]
-            if text.startswith("json"):
-                text = text[4:]
-        text = text.strip()
+        text = "{" + message.content[0].text.strip()
         result = json.loads(text)
         return jsonify(result)
     except Exception as e:
